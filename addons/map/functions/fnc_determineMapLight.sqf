@@ -26,7 +26,7 @@ _fnc_blendColor = {
      (_c1 select 3) * (1 - _alpha) + (_c2 select 3) * _alpha]
 };
 
-// Ambient light tint depending on time of day
+// Ambient light tint depending on ACE_time of day
 _lightTint = switch (true) do {
     case (sunOrMoon == 1.0) : { [0.5,0.5,0.5,1] };
     case (sunOrMoon > 0.80) : {[[1.0 - overcast,0.2,0,1], [1,1,1,1],   (sunOrMoon - 0.8)/0.2] call _fnc_blendColor};
@@ -72,7 +72,7 @@ _vehicle = vehicle _unit;
 // Do not obscure the map if the player is on a enclosed vehicle (assume internal illumination)
 if (_vehicle != _unit) then {
     // Player is in a vehicle
-    if (isTurnedOut _unit && {_vehicle isKindOf "Tank" || {_vehicle isKindOf "Wheeled_APC"}}) then {
+    if (isTurnedOut _unit && { _vehicle isKindOf "Tank" || { ( _vehicle isKindOf "Helicopter" || _vehicle isKindOf "Plane" ) && { (driver _vehicle) == _unit || { (gunner _vehicle) == _unit } } } || {_vehicle isKindOf "Wheeled_APC"}}) then {
         _isEnclosed = true;
     };
 };

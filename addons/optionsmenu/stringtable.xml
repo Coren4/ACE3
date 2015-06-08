@@ -3,7 +3,7 @@
     <Package name="OptionsMenu">
         <Key ID="STR_ACE_OptionsMenu_OpenConfigMenu">
             <English>ACE Options</English>
-            <German>ACE Optionen</German>
+            <German>ACE-Optionen</German>
             <Spanish>Opciones ACE</Spanish>
             <Polish>Ustawienia ACE</Polish>
             <Czech>ACE Nastavení</Czech>
@@ -23,10 +23,11 @@
             <French>Corriger animation</French>
             <Hungarian>Animációk kijavítása</Hungarian>
             <Italian>Fixa l'animazione</Italian>
+            <Portuguese>Arrumar  Animação</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_ResetAll">
             <English>Reset All</English>
-            <German>Alles Zurücksetzen</German>
+            <German>Alles zurücksetzen</German>
             <Spanish>Reiniciar todo</Spanish>
             <Russian>Полный сброс</Russian>
             <Czech>Vyresetovat vše</Czech>
@@ -34,6 +35,7 @@
             <French>Défaut</French>
             <Hungarian>Minden visszaállítása</Hungarian>
             <Italian>Resetta tutto</Italian>
+            <Portuguese>Resetar Tudo</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_TabColors">
             <English>Colors</English>
@@ -45,6 +47,7 @@
             <Polish>Kolory</Polish>
             <Hungarian>Színek</Hungarian>
             <Italian>Colori</Italian>
+            <Portuguese>Cores</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_TabOptions">
             <English>Options</English>
@@ -68,6 +71,7 @@
             <German>Werte</German>
             <Hungarian>Értékek</Hungarian>
             <Italian>Valori</Italian>
+            <Portuguese>Valores</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_Enabled">
             <English>Yes</English>
@@ -99,10 +103,11 @@
             <German>Einstellung:</German>
             <Russian>Установки:</Russian>
             <Spanish>Ajuste:</Spanish>
-            <Polish>Ustawienie:</Polish>
+            <Polish>Ustaw:</Polish>
             <French>Paramètres</French>
             <Hungarian>Opció:</Hungarian>
             <Italian>Parametri:</Italian>
+            <Portuguese>Opção:</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_Export">
             <English>Export</English>
@@ -114,27 +119,31 @@
             <French>Exporter</French>
             <Hungarian>Exportálás</Hungarian>
             <Italian>Esporta</Italian>
+            <Portuguese>Exportar</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_OpenExport">
             <English>Open Export Menu</English>
             <German>Öffne Exportmenü</German>
-            <Spanish>Abrir menu d'exportación</Spanish>
+            <Spanish>Abrir menú de exportación</Spanish>
             <Russian>Открыть меню экспорта</Russian>
             <Czech>Otevřít exportovací menu</Czech>
             <Polish>Otwórz menu eksportowania</Polish>
             <French>Ouvrir le menu d'exportation</French>
             <Hungarian>Exportálási menü megnyitása</Hungarian>
             <Italian>Apri menù esportazione</Italian>
+            <Portuguese>Abrir menu de exportação</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_stringType">
             <English>String input.</English>
-            <German>String input.</German>
-            <Spanish>Introducir frase</Spanish>
+            <German>Zeichenketteneingabe</German>
+            <Spanish>Introducir cadena de texto.</Spanish>
             <Russian>Строчный ввод.</Russian>
             <Polish>Wpisywanie tekstu.</Polish>
+            <Czech>Vkládání textu.</Czech>
             <French>Entrée</French>
             <Hungarian>String bevitel.</Hungarian>
             <Italian>Stringa di unput.</Italian>
+            <Portuguese>Input de String</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_arrayType">
             <English>Array. Seperate elements by using ,.</English>
@@ -146,19 +155,21 @@
             <Czech>Tabulka. Odděl elementy použitím ,.</Czech>
             <Hungarian>Array. Válasszad el az elemeket vesszővel.</Hungarian>
             <Italian>Array. Separa gli elementi usando ,.</Italian>
+            <Portuguese>Vetor. Separe elementos usando *,*.</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_scalarType">
             <English>Number</English>
-            <German>Nummer</German>
-            <Spanish>Numero</Spanish>
+            <German>Zahl</German>
+            <Spanish>Número</Spanish>
             <Russian>Число</Russian>
             <Czech>Číslo</Czech>
             <Polish>Cyfra</Polish>
             <French>Nombre</French>
             <Hungarian>Szám</Hungarian>
             <Italian>Numero</Italian>
+            <Portuguese>Número</Portuguese>
         </Key>
-        <Key ID="STR_ACE_optionsMenu_unknownType">
+        <Key ID="STR_ACE_OptionsMenu_unknownType">
             <English>Uknown input type</English>
             <German>Unbekannter Eingabetyp</German>
             <Spanish>Tipo de entrada desconocida</Spanish>
@@ -168,6 +179,7 @@
             <French>Type d'entrée inconnue</French>
             <Hungarian>Ismeretlen beviteli típus</Hungarian>
             <Italian>Input inserito sconosciuto</Italian>
+            <Portuguese>Tipo desonhecido de input</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_SaveInput">
             <English>Save input</English>
@@ -179,10 +191,11 @@
             <French>Sauvegarder</French>
             <Hungarian>Bevitel elmentése</Hungarian>
             <Italian>Salva input</Italian>
+            <Portuguese>Salvar input</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_inClientSettings">
             <English>Include Client Settings</English>
-            <German>Beinhalte Client-Einstellungen</German>
+            <German>Schließe Client-Einstellungen ein</German>
             <Spanish>Incluir configuración de cliente</Spanish>
             <Russian>Включить настройки клиента</Russian>
             <Czech>Zahrnout nastavení klienta</Czech>
@@ -190,6 +203,7 @@
             <French>Inclure paramètres client</French>
             <Hungarian>Kliens-beállítások melléklése</Hungarian>
             <Italian>Includi i parametri del client</Italian>
+            <Portuguese>Incluir opções do cliente</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_exClientSettings">
             <English>Exclude Client Settings</English>
@@ -201,6 +215,7 @@
             <French>Exclure paramètres client</French>
             <Hungarian>Kliens-beállítások elhagyása</Hungarian>
             <Italian>Escludi i parametri del client</Italian>
+            <Portuguese>Excluir opções do cliente</Portuguese>
         </Key>
         <Key ID="STR_ACE_OptionsMenu_settingsExported">
             <English>Settings exported to clipboard</English>
@@ -212,10 +227,93 @@
             <French>Paramètres exportés dans le presse papier</French>
             <Hungarian>Beállítások exportálva a vágólapba</Hungarian>
             <Italian>Parametri esportati alla clipboard</Italian>
+            <Portuguese>Opções exportadas para o clipboard.</Portuguese>
         </Key>
-        <Key ID="STR_ACE_optionsMenu_uiScaing">
+        <Key ID="STR_ACE_OptionsMenu_uiScaing">
             <English>Option Menu UI Scaling</English>
             <French>Menu option: taille de l'UI</French>
+            <Polish>Skalowanie UI menu ustawień</Polish>
+            <Czech>Měřítko UI v menu nastavení</Czech>
+            <Russian>Размер интерфейса меню настройки</Russian>
+            <Spanish>Opción de escalado del menú IU</Spanish>
+            <German>UI Skalierung</German>
+            <Hungarian>Beállításmenü kezelőfelületének skálázása</Hungarian>
+            <Portuguese>Escalar o menu de opções</Portuguese>
+            <Italian>Proporzioni della interfaccia utente</Italian>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_AllowConfigExport_Module_DisplayName">
+            <English>Allow Config Export [ACE]</English>
+            <Polish>Pozwól na eksport ustawień [ACE]</Polish>
+            <Spanish>[ACE] Permitir exportar configuración</Spanish>
+            <German>Erlaube Config-Export [ACE]</German>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_AllowConfigExport_allowconfigurationExport_DisplayName">
+            <English>Allow</English>
+            <Polish>Zezwól</Polish>
+            <Spanish>Permitir</Spanish>
+            <German>Erlaube</German>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_AllowConfigExport_allowconfigurationExport_Description">
+            <English>Allow export of all settings to a server config formatted.</English>
+            <Polish>Zezwól na eksport wszystkich ustawień do formatu konfiguracji serwera.</Polish>
+            <Spanish>Permitir la exportación de todos los ajustes de configuración a un servidor con formato.</Spanish>
+            <German>Erlaube alle Einstellungen in einer Server-Config zu exportieren.</German>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_AllowConfigExport_Module_Description">
+            <English>When allowed, you have access to the settings modification and export in SP. Clicking export will place the formated config on your clipboard.</English>
+            <Polish>Jeżeli ustawione na zezwól, wtedy będziesz mieć dostęp do ekranu modyfikacji wszystich ustawień i zmiennych ACE, a także będziesz mieć możliwość eksportu tychże ustawień do formatu rozpoznawalnego przez userconfig serwera. Kliknięcie opcji Eksportuj skopiuje wszystkie ustawienia do schowka. Działa tylko w trybie SP.</Polish>
+            <Spanish>Cuando esta permitido, se tiene acceso a los ajustes de modificación y exportación en SP. Pulsar en exportar copiara la configuración al portapapeles.</Spanish>
+            <German>Wenn erlaubt, können die Einstellungsmodifikationen angezeigt und im SP exportiert werden. Wenn auf "Exportieren" geklickt wird, wird eine formatierte Config-Datei in der Zwischenablage abgespeichert.</German>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_Hide">
+            <English>Hide</English>
+            <Polish>Ukryj</Polish>
+            <Spanish>Ocultar</Spanish>
+            <German>Verstecken</German>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_TopRightDown">
+            <English>Top right, downwards</English>
+            <Polish>Po prawej u góry, w dół</Polish>
+            <Spanish>Arriba a la derecha, hacia abajo</Spanish>
+            <German>Open rechts, nach unten</German>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_TopRightLeft">
+            <English>Top right, to the left</English>
+            <Polish>Po prawej u góry, do lewej</Polish>
+            <Spanish>Arriba a la derecha, hacia la izquierda</Spanish>
+            <German>Von rechts nach links</German>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_TopLeftDown">
+            <English>Top left, downwards</English>
+            <Polish>Po lewej u góry, w dół</Polish>
+            <Spanish>Arriba a la izquierda, hacia abajo</Spanish>
+            <German>Von links, nach unten</German>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_TopLeftRight">
+            <English>Top left, to the right</English>
+            <Polish>Po lewej u góry, do prawej</Polish>
+            <Spanish>Arriba a la izquierda, hacia la derecha</Spanish>
+            <German>Oben links nach rechts</German>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_Top">
+            <English>Top</English>
+            <Polish>Góra</Polish>
+            <Spanish>Arriba</Spanish>
+            <German>Oben</German>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_Bottom">
+            <English>Bottom</English>
+            <Polish>Dół</Polish>
+            <Spanish>Abajo</Spanish>
+            <German>Unten</German>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_DumpDebug">
+            <English>Debug To Clipboard</English>
+            <Polish>Debuguj do schowka</Polish>
+        </Key>
+        <Key ID="STR_ACE_OptionsMenu_DumpDebugTooltip">
+            <English>Sends debug information to RPT and clipboard.</English>
+            <Polish>Wysyła informacje o debugowaniu do RPT oraz schowka.</Polish>
         </Key>
     </Package>
 </Project>

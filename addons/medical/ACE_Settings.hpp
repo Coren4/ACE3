@@ -22,6 +22,10 @@ class ACE_Settings {
         typeName = "SCALAR";
         value = 1;
     };
+    class GVAR(painCoefficient) {
+        typeName = "SCALAR";
+        value = 1;
+    };
     class GVAR(enableAirway) {
         typeName = "BOOL";
         value = false;
@@ -50,14 +54,19 @@ class ACE_Settings {
         typeName = "SCALAR";
         value = 1;
     };
-    class GVAR(enableUnsconsiousnessAI) {
+    class GVAR(enableUnconsciousnessAI) {
         value = 1;
         typeName = "SCALAR";
-        values[] = {"Disabled", "Enabled", "50/50"};
+        values[] = {"Disabled", "50/50", "Enabled"};
     };
     class GVAR(preventInstaDeath) {
         typeName = "BOOL";
         value = 0;
+    };
+    class GVAR(enableRevive) {
+        typeName = "SCALAR";
+        value = 0;
+        values[] = {"Disabled", "Players only", "Players and AI"};
     };
     class GVAR(maxReviveTime) {
         typeName = "SCALAR";
@@ -73,11 +82,22 @@ class ACE_Settings {
     };
     class GVAR(allowLitterCreation) {
         typeName = "BOOL";
-        value = true;
+        value = 1;
+    };
+    class GVAR(litterSimulationDetail) {
+        displayName = CSTRING(litterSimulationDetail);
+        description = CSTRING(litterSimulationDetail_Desc);
+        typeName = "SCALAR";
+
+        value = 3;
+        values[] = {"Off", "Low", "Medium", "High", "Ultra"};
+        _values[] = { 0, 50, 100, 1000, 5000 };
+
+        isClientSettable = 1;
     };
     class GVAR(litterCleanUpDelay) {
         typeName = "SCALAR";
-        value = 1800;
+        value = 0;
     };
     class GVAR(medicSetting_PAK) {
         typeName = "SCALAR";
@@ -118,10 +138,27 @@ class ACE_Settings {
         value = 1;
     };
     class GVAR(painEffectType) {
-        displayName = "$STR_ACE_Medical_painEffectType";
+        displayName = CSTRING(painEffectType);
         typeName = "SCALAR";
         value = 0;
-        values[] = {"$STR_ACE_Medical_painEffect_Flash", "$STR_ACE_Medical_painEffect_Chroma"};
+        values[] = {CSTRING(painEffect_Flash), CSTRING(painEffect_Chroma)};
         isClientSettable = 1;
+    };
+    class GVAR(allowUnconsciousAnimationOnTreatment) {
+        typeName = "BOOL";
+        value = 0;
+    };
+    class GVAR(moveUnitsFromGroupOnUnconscious) {
+        typeName = "BOOL";
+        value = 0;
+    };
+
+    class GVAR(menuTypeStyle) {
+        displayName = CSTRING(menuTypeDisplay);
+        description = CSTRING(menuTypeDescription);
+        typeName = "SCALAR";
+        value = 0;
+        values[] = {CSTRING(useSelection)/*, CSTRING(useRadial)*/};
+        // isClientSettable = 1;
     };
 };

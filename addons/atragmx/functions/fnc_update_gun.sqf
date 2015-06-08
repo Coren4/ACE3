@@ -26,7 +26,7 @@ if (GVAR(currentUnit) != 2) then {
 } else {
     ctrlSetText [110, Str(Round(GVAR(workingMemory) select 12))];
 };
-if ((missionNamespace getVariable [QEGVAR(advanced_ballistics,enabled), false]) && (missionNamespace getVariable [QEGVAR(advanced_ballistics,AdvancedAirDragEnabled), false])) then {
+if (missionNamespace getVariable [QEGVAR(advanced_ballistics,enabled), false]) then {
     ctrlSetText [120, Str(Round((GVAR(workingMemory) select 15) * 1000) / 1000)];
 } else {
     ctrlSetText [120, Str(Round((GVAR(workingMemory) select 4) * -1000 * 1000) / 1000)];
@@ -36,10 +36,15 @@ if (GVAR(currentUnit) != 2) then {
 } else {
     ctrlSetText [130, Str(Round(GVAR(workingMemory) select 1))];
 };
-if (GVAR(currentUnit) != 1) then {
-    ctrlSetText [140, Str(Round(GVAR(workingMemory) select 2))];
-} else {
-    ctrlSetText [140, Str(Round((GVAR(workingMemory) select 2) * 1.0936133))];
+switch (GVAR(currentUnit)) do {
+    case 0: {
+        ctrlSetText [140, format["*%1", Round(GVAR(workingMemory) select 2)]];
+    };
+    case 1: {
+        ctrlSetText [140, Str(Round((GVAR(workingMemory) select 2) * 1.0936133))];
+    };
+    case 2: {
+        ctrlSetText [140, Str(Round(GVAR(workingMemory) select 2))];
+    };
 };
-
 [] call FUNC(update_scope_unit);

@@ -9,7 +9,9 @@ private["_apos", "_aposX", "_aposY", "_args", "_boundsInput", "_bpos", "_canFire
 private["_constraintLeft", "_constraintRight", "_constraintTop", "_currentTarget", "_fireDisabledEH"];
 private["_firedEH", "_fov", "_lastTick", "_lockTime", "_maxX", "_maxY", "_minX", "_minY", "_newTarget"]; 
 private["_offsetX", "_offsetY", "_pos", "_randomLockInterval", "_randomPosWithinBounds", "_range"];
-private["_runTime", "_soundTime", "_targetArray", "_zamerny"];
+private["_runTime", "_soundTime", "_targetArray", "_zamerny", "_currentShooter"];
+
+_currentShooter = (vehicle ACE_player);
 
 #define __OffsetX ((ctrlPosition __JavelinIGUITargetingLineV) select 0) - 0.5
 #define __OffsetY ((ctrlPosition __JavelinIGUITargetingLineH) select 1) - 0.5
@@ -18,7 +20,7 @@ private["_runTime", "_soundTime", "_targetArray", "_zamerny"];
 _args = uiNamespace getVariable[QGVAR(arguments), [] ];
 if( (count _args) > 0) then {
     _lastTick = _args select 0;
-    if(diag_tickTime - _lastTick > 1) then {
+    if(ACE_diagTime - _lastTick > 1) then {
         [] call FUNC(onOpticLoad);
     };
 };
@@ -33,10 +35,17 @@ _soundTime = _args select 4;
 _randomLockInterval = _args select 5;
 _fireDisabledEH = _args select 6;
 
-if( ! ([ (configFile >> "CfgWeapons" >> (currentWeapon (vehicle ACE_player)) ), "launch_Titan_short_base"] call EFUNC(common,inheritsFrom)) 
-    &&
-    { ! ([ (configFile >> "CfgWeapons" >> (currentWeapon (vehicle ACE_player)) ), "missiles_titan_at"] call EFUNC(common,inheritsFrom)) }
-    ) exitWith {
+private["_ammo", "_magazineConfig", "_weaponConfig"];
+_weaponConfig = configProperties [configFile >> "CfgWeapons" >> (currentWeapon _currentShooter), QUOTE(configName _x == QUOTE(QGVAR(enabled))), false];
+_magazineConfig = if ((currentMagazine _currentShooter) != "") then {
+    _ammo = getText (configFile >> "CfgMagazines" >> (currentMagazine _currentShooter) >> "ammo");
+    configProperties [(configFile >> "CfgAmmo" >> _ammo), "(configName _x) == 'ace_missileguidance'", false];
+} else {
+    []
+};
+
+//Only enable if both weapon and currentMagazine are enabled (bandaid to allow firing the "AP" missle)
+if (((count _weaponConfig) < 1) || {(getNumber (_weaponConfig select 0)) != 1} || {(count _magazineConfig) < 1} || {(getNumber ((_magazineConfig select 0) >> "enabled")) != 1}) exitWith {
     __JavelinIGUITargeting ctrlShow false;
     __JavelinIGUITargetingGate ctrlShow false;
     __JavelinIGUITargetingLines ctrlShow false;
@@ -128,7 +137,7 @@ FUNC(disableFire) = {
     
     if(_firedEH < 0 && difficulty > 0) then {
         _firedEH = [ACE_player, "DefaultAction", {true}, { 
-            _canFire = ACE_player getVariable["ace_missileguidance_target", nil];
+            _canFire = (_this select 1) getVariable["ace_missileguidance_target", nil];
             if(!isNil "_canFire") exitWith { false };
             true
         }] call EFUNC(common,addActionEventHandler);
@@ -155,7 +164,7 @@ if (isNull _newTarget) then {
     __JavelinIGUITargetingLines ctrlShow false;
     __JavelinIGUITargetingConstraints ctrlShow false;
     
-    ACE_player setVariable ["ace_missileguidance_target",nil, false];  
+    _currentShooter setVariable ["ace_missileguidance_target",nil, false];  
     
     // Disallow fire
     _fireDisabledEH = [_fireDisabledEH] call FUNC(disableFire);
@@ -170,12 +179,12 @@ if (isNull _newTarget) then {
         // Lock on after 3 seconds
          if(_currentTarget != _newTarget) then {
             TRACE_1("New Target, reseting locking", _newTarget);
-            _lockTime = diag_tickTime;
+            _lockTime = ACE_diagTime;
             _currentTarget = _newTarget;
             
             playSound "ACE_Javelin_Locking";
         } else {
-            if(diag_tickTime - _lockTime > __LOCKONTIME + _randomLockInterval) then {
+            if(ACE_diagTime - _lockTime > __LOCKONTIME + _randomLockInterval) then {
                 TRACE_2("LOCKED!", _currentTarget, _lockTime);
                 
                 __JavelinIGUISeek ctrlSetTextColor __ColorGreen;
@@ -212,14 +221,14 @@ if (isNull _newTarget) then {
                 
                 {_x ctrlCommit __TRACKINTERVAL} forEach [__JavelinIGUITargetingGateTL,__JavelinIGUITargetingGateTR,__JavelinIGUITargetingGateBL,__JavelinIGUITargetingGateBR];
                 
-                ACE_player setVariable["ace_missileguidance_target", _currentTarget, false];
+                _currentShooter setVariable["ace_missileguidance_target", _currentTarget, false];
                 
                 // Allow fire
                 _fireDisabledEH = [_fireDisabledEH] call FUNC(enableFire);
                 
-                if(diag_tickTime > _soundTime) then {
+                if(ACE_diagTime > _soundTime) then {
                     playSound "ACE_Javelin_Locked";
-                    _soundTime = diag_tickTime + 0.25;
+                    _soundTime = ACE_diagTime + 0.25;
                 };
             } else {
                 __JavelinIGUITargeting ctrlShow true;
@@ -227,7 +236,7 @@ if (isNull _newTarget) then {
                  __JavelinIGUITargetingConstrains ctrlShow true;
                 __JavelinIGUITargetingLines ctrlShow false;
 
-                ACE_player setVariable["ace_missileguidance_target", nil, false];
+                _currentShooter setVariable["ace_missileguidance_target", nil, false];
                 
                 _boundsInput = if (_currentTarget isKindOf "CAManBase") then {
                     [_newTarget,[-1,-1,-2],_currentTarget selectionPosition "body"];
@@ -251,9 +260,9 @@ if (isNull _newTarget) then {
                 
                 {_x ctrlCommit __TRACKINTERVAL} forEach [__JavelinIGUITargetingGateTL,__JavelinIGUITargetingGateTR,__JavelinIGUITargetingGateBL,__JavelinIGUITargetingGateBR];
 
-                if(diag_tickTime > _soundTime) then {
+                if(ACE_diagTime > _soundTime) then {
                     playSound "ACE_Javelin_Locking";
-                    _soundTime = diag_tickTime + 0.25;
+                    _soundTime = ACE_diagTime + 0.25;
                 };
                 // Disallow fire
                _fireDisabledEH = [_fireDisabledEH] call FUNC(disableFire);
@@ -270,7 +279,7 @@ if (isNull _newTarget) then {
         __JavelinIGUITargetingLines ctrlShow false;
         __JavelinIGUITargetingConstraints ctrlShow false;
         
-        ACE_player setVariable ["ace_missileguidance_target",nil, false];
+        _currentShooter setVariable ["ace_missileguidance_target",nil, false];
         
         // Disallow fire
         _fireDisabledEH = [_fireDisabledEH] call FUNC(disableFire);
@@ -280,7 +289,7 @@ if (isNull _newTarget) then {
 //TRACE_2("", _newTarget, _currentTarget);
 
 // Save arguments for next run
-_args set[0, diag_tickTime];
+_args set[0, ACE_diagTime];
 _args set[1, _currentTarget];
 _args set[2, _runTime];
 _args set[3, _lockTime];

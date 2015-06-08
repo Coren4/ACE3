@@ -16,7 +16,7 @@
 
 #include "script_component.hpp"
 
-private ["_caller", "_target", "_selectionName", "_className", "_config", "_availableLevels", "_medicRequired", "_items", "_locations", "_return", "_callbackSuccess", "_callbackFailure", "_callbackProgress", "_treatmentTime", "_callerAnim", "_patientAnim", "_iconDisplayed", "_return", "_usersOfItems", "_consumeItems"];
+private ["_caller", "_target", "_selectionName", "_className", "_config", "_medicRequired", "_items", "_locations", "_return", "_callbackProgress", "_treatmentTime", "_callerAnim", "_patientAnim", "_iconDisplayed", "_return", "_usersOfItems", "_consumeItems", "_condition", "_displayText", "_wpn", "_treatmentTimeConfig"];
 _caller = _this select 0;
 _target = _this select 1;
 _selectionName = _this select 2;
@@ -26,7 +26,7 @@ _className = _this select 3;
 if (uiNamespace getVariable [QEGVAR(interact_menu,cursorMenuOpened),false]) exitwith {
     [{
         _this call FUNC(treatment);
-    }, _this, 0, 0] call EFUNC(common,waitAndExecute);
+    }, _this] call EFUNC(common,execNextFrame);
 };
 
 if !(_target isKindOf "CAManBase") exitWith {false};
@@ -129,7 +129,7 @@ if (isNil _callbackProgress) then {
 
 // Patient Animation
 _patientAnim = getText (_config >> "animationPatient");
-if (_target getvariable ["ACE_isUnconscious", false]) then {
+if (_target getvariable ["ACE_isUnconscious", false] && GVAR(allowUnconsciousAnimationOnTreatment)) then {
     if !(animationState _target in (getArray (_config >> "animationPatientUnconsciousExcludeOn"))) then {
         _patientAnim = getText (_config >> "animationPatientUnconscious");
     };
@@ -149,12 +149,14 @@ if (_caller == _target) then {
     _callerAnim = [getText (_config >> "animationCallerSelf"), getText (_config >> "animationCallerSelfProne")] select (stance _caller == "PRONE");
 };
 
+_caller setvariable [QGVAR(selectedWeaponOnTreatment), currentWeapon _caller];
+
 // Cannot use secondairy weapon for animation
 if (currentWeapon _caller == secondaryWeapon _caller) then {
     _caller selectWeapon (primaryWeapon _caller);
 };
 
-_wpn = ["non", "rfl", "pst"] select (["", primaryWeapon _caller, handgunWeapon _caller] find (currentWeapon _caller));
+_wpn = ["non", "rfl", "pst"] select (1 + ([primaryWeapon _caller, handgunWeapon _caller] find (currentWeapon _caller)));
 _callerAnim = [_callerAnim, "[wpn]", _wpn] call CBA_fnc_replace;
 if (vehicle _caller == _caller && {_callerAnim != ""}) then {
     if (primaryWeapon _caller == "") then {
@@ -172,8 +174,26 @@ if (vehicle _caller == _caller && {_callerAnim != ""}) then {
     [_caller, _callerAnim] call EFUNC(common,doAnimation);
 };
 
+//Get treatment time
+_treatmentTime = if (isNumber (_config >> "treatmentTime")) then {
+    getNumber (_config >> "treatmentTime");
+} else {
+    if (isText (_config >> "treatmentTime")) exitwith {
+        _treatmentTimeConfig = getText(_config >> "treatmentTime");
+        if (isnil _treatmentTimeConfig) then {
+            _treatmentTimeConfig = compile _treatmentTimeConfig;
+        } else {
+            _treatmentTimeConfig = missionNamespace getvariable _treatmentTimeConfig;
+        };
+        if (typeName _treatmentTimeConfig == "SCALAR") exitwith {
+            _treatmentTimeConfig;
+        };
+        [_caller, _target, _selectionName, _className] call _treatmentTimeConfig;
+    };
+    0;
+};
+
 // Start treatment
-_treatmentTime = getNumber (_config >> "treatmentTime");
 [
     _treatmentTime,
     [_caller, _target, _selectionName, _className, _items, _usersOfItems],

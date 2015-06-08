@@ -47,16 +47,16 @@ _temperature = GVAR(temperature);
 _barometricPressure = GVAR(barometricPressure);
 _relativeHumidity = GVAR(relativeHumidity);
 if (!GVAR(atmosphereModeTBH)) then {
-    _barometricPressure = 1013.25 * exp(-(_altitude) / 7990);
+    _barometricPressure = 1013.25 * (1 - (0.0065 * _altitude) / (273.15 + _temperature + 0.0065 * _altitude)) ^ 5.255754495;
     _relativeHumidity = 50;
 };
 
 private ["_bulletLength", "_stabilityFactor"];
-_bulletLength = 1.8;
+_bulletLength = 45.72;
 _stabilityFactor = 1.5;
-if ((missionNamespace getVariable [QEGVAR(advanced_ballistics,enabled), false]) && (missionNamespace getVariable [QEGVAR(advanced_ballistics,SpinDriftEnabled), false])) then {
+if (missionNamespace getVariable [QEGVAR(advanced_ballistics,enabled), false]) then {
     if (_bulletDiameter > 0 && _bulletLength > 0 && _bulletMass > 0 && _barrelTwist > 0) then {
-        _stabilityFactor = [_bulletDiameter / 10 / 2.54, _bulletLength, _bulletMass * 15.4323584, _barrelTwist / 2.54, _muzzleVelocity, _temperature, _barometricPressure] call EFUNC(advanced_ballistics,calculateStabilityFactor);
+        _stabilityFactor = [_bulletDiameter, _bulletLength, _bulletMass, _barrelTwist * 10, _muzzleVelocity, _temperature, _barometricPressure] call EFUNC(advanced_ballistics,calculateStabilityFactor);
     };
 };
 
@@ -72,7 +72,7 @@ _targetRange = GVAR(targetRange) select GVAR(currentTarget);
 
 private ["_result"];
 _result = [_scopeBaseAngle, _bulletMass, _boreHeight, _airFriction, _muzzleVelocity, _temperature, _barometricPressure, _relativeHumidity, 1000,
-            [_windSpeed1, _windSpeed2], _windDirection, _inclinationAngle, _targetSpeed, _targetRange, _bc, _dragModel, _atmosphereModel, false, _stabilityFactor, _twistDirection, _latitude] call FUNC(calculate_solution);
+            [_windSpeed1, _windSpeed2], _windDirection, _inclinationAngle, _targetSpeed, _targetRange, _bc, _dragModel, _atmosphereModel, false, _stabilityFactor, _twistDirection, _latitude, _directionOfFire] call FUNC(calculate_solution);
 
 GVAR(elevationOutput) set [GVAR(currentTarget), _result select 0];
 GVAR(windage1Output) set [GVAR(currentTarget), (_result select 1) select 0];
